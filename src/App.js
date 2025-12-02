@@ -95,6 +95,8 @@ function DiscPieChart({ scores }) {
 
   return (
     <div className="flex flex-col items-center gap-4">
+
+      {/* The Pie Chart */}
       <svg
         viewBox="0 0 32 32"
         className="w-48 h-48 rounded-full"
@@ -109,7 +111,7 @@ function DiscPieChart({ scores }) {
           stroke="#1f2937"
           strokeWidth="8"
         />
-        {/* القطاعات */}
+        {/* segments */}
         {segments.map((seg) => (
           <circle
             key={seg.key}
@@ -126,23 +128,55 @@ function DiscPieChart({ scores }) {
         ))}
       </svg>
 
-      <div className="space-y-2 w-full">
-        {segments.map((seg) => (
-          <div
-            key={seg.key}
-            className="flex items-center justify-between gap-2 text-sm"
-          >
-            <div className="flex items-center gap-2">
-              <span
-                className="inline-block w-3 h-3 rounded"
-                style={{ backgroundColor: seg.color }}
-              />
-              <span>{seg.label}</span>
-            </div>
-            <span className="font-semibold">{seg.percent}%</span>
+      <div className="space-y-4 w-full">
+  {segments.map((seg) => {
+    let desc = "";
+
+    switch (seg.key) {
+      case "D":
+        desc =
+          "حازم وطموح، يركز على النتائج ويحب اتخاذ القرارات السريعة. يحفّزه التحدي وتحقيق التأثير.";
+        break;
+      case "I":
+        desc =
+          "ودود ومُلهم للآخرين، يحب التواصل والعلاقة الإيجابية. يعبر عن أفكاره بسهولة ويحفّز بروح المتعة.";
+        break;
+      case "S":
+        desc =
+          "هادئ ومتوازن، يفضل الاستقرار والعلاقات المتعاونة. يميل للصبر ويبحث عن بيئة يسودها الانسجام.";
+        break;
+      case "C":
+        desc =
+          "منظم ودقيق، يهتم بالحقائق والجودة والأنظمة. يفضل التحليل والوضوح قبل اتخاذ القرار.";
+        break;
+    }
+
+    return (
+      <div
+        key={seg.key}
+        className="space-y-1 border-b pb-2 last:border-none"
+      >
+        {/* Header Row */}
+        <div className="flex items-center justify-between gap-2 text-sm">
+          <div className="flex items-center gap-2">
+            <span
+              className="inline-block w-3 h-3 rounded"
+              style={{ backgroundColor: seg.color }}
+            />
+            <span className="font-medium">{seg.label}</span>
           </div>
-        ))}
+          <span className="font-semibold">{seg.percent}%</span>
+        </div>
+
+        {/* Description */}
+        <p className="text-xs text-gray-600 leading-relaxed">
+          {desc}
+        </p>
       </div>
+    );
+  })}
+</div>
+
     </div>
   );
 }
