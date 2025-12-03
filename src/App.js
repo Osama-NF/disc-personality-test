@@ -1,60 +1,8 @@
 // App.jsx
 import React, { useState, useMemo } from "react";
+import questions from "./questions";
 
 
-const questions = [
-  { id: 1, text: "أفضل اتخاذ القرارات سريعًا دون تردد.", color: "D" },
-  { id: 2, text: "أستمتع بالمنافسة وتحقيق الإنجازات.", color: "D" },
-  { id: 3, text: "أحب تحمل المسؤولية وقيادة المواقف.", color: "D" },
-  { id: 4, text: "لا أتردد في قول رأيي بوضوح حتى لو كان حادًا.", color: "D" },
-  { id: 5, text: "أواجه التحديات بثقة حتى تحت الضغط.", color: "D" },
-  { id: 6, text: "أسعى دائمًا لتحقيق نتائج ملموسة.", color: "D" },
-  { id: 7, text: "أفضّل اتخاذ خطوات جريئة بدلاً من التأجيل.", color: "D" },
-  { id: 8, text: "أتفاعل بسرعة مع الظروف المتغيرة.", color: "D" },
-  { id: 9, text: "لا أمانع في المخاطرة لتحقيق أهدافي.", color: "D" },
-  { id: 10, text: "أركز على الحلول العملية أكثر من التفاصيل الصغيرة.", color: "D" },
-  { id: 11, text: "أدفع الآخرين للتقدم وإنهاء المهام.", color: "D" },
-  { id: 12, text: "أحب التحكم في مسار الأحداث بدلاً من متابعتها فقط.", color: "D" },
-
-  { id: 13, text: "أستمتع بالتواصل مع الناس والتعرف على شخصيات جديدة.", color: "I" },
-  { id: 14, text: "أشعر بالراحة عندما أعمل ضمن فريق.", color: "I" },
-  { id: 15, text: "أحب مشاركة أفكاري مع الآخرين.", color: "I" },
-  { id: 16, text: "أميل لنشر الحماس والطاقة بين من حولي.", color: "I" },
-  { id: 17, text: "أستخدم مهاراتي الاجتماعية لحل المشكلات.", color: "I" },
-  { id: 18, text: "أعبّر عن مشاعري بسهولة.", color: "I" },
-  { id: 19, text: "أفضّل العمل الذي فيه تواصل وتفاعل.", color: "I" },
-  { id: 20, text: "أحب التأثير على الآخرين وإقناعهم بوجهة نظري.", color: "I" },
-  { id: 21, text: "أجد من السهل تكوين صداقات جديدة.", color: "I" },
-  { id: 22, text: "أشعر بالسعادة عندما أكون في مركز الاهتمام.", color: "I" },
-  { id: 23, text: "أستطيع التكيف اجتماعيًا بطريقة سريعة.", color: "I" },
-  { id: 24, text: "أستخدم الإبداع والمرح لتخفيف التوتر.", color: "I" },
-
-  { id: 25, text: "أفضل الاستقرار في العمل والحياة.", color: "S" },
-  { id: 26, text: "أميل إلى التمهل وعدم العجلة في القرارات.", color: "S" },
-  { id: 27, text: "أحاول دائمًا الحفاظ على الهدوء في المواقف الصعبة.", color: "S" },
-  { id: 28, text: "أهتم بالعلاقات الهادئة وغير التصادمية.", color: "S" },
-  { id: 29, text: "أستمع للآخرين باهتمام وصبر.", color: "S" },
-  { id: 30, text: "أفضل الروتين على التغيير المفاجئ.", color: "S" },
-  { id: 31, text: "أسعى لدعم الآخرين بدلًا من قيادتهم.", color: "S" },
-  { id: 32, text: "أتجنب الصراعات قدر الإمكان.", color: "S" },
-  { id: 33, text: "أحب العمل بمعدل ثابت دون ضغط.", color: "S" },
-  { id: 34, text: "أفضّل التعاون على المنافسة.", color: "S" },
-  { id: 35, text: "أقدّر الأمان العاطفي والعملي.", color: "S" },
-  { id: 36, text: "أشعر بالراحة في المهام المتكررة والواضحة.", color: "S" },
-
-  { id: 37, text: "أهتم بالتفاصيل الدقيقة في أي مهمة.", color: "C" },
-  { id: 38, text: "أميل للتخطيط قبل البدء بأي قرار.", color: "C" },
-  { id: 39, text: "أفضل اتباع القواعد والإجراءات الواضحة.", color: "C" },
-  { id: 40, text: "أفكر بمنطق وتحليل قبل أي خطوة.", color: "C" },
-  { id: 41, text: "أراجع عملي أكثر من مرة للتأكد من صحته.", color: "C" },
-  { id: 42, text: "أتعامل بحذر مع المخاطر.", color: "C" },
-  { id: 43, text: "أطلب التوضيحات قبل البدء في المشاريع.", color: "C" },
-  { id: 44, text: "أفضّل الجودة على السرعة.", color: "C" },
-  { id: 45, text: "أدوّن المعلومات بشكل منظّم.", color: "C" },
-  { id: 46, text: "أحتاج وقتًا للتفكير قبل الرد.", color: "C" },
-  { id: 47, text: "أحلل الأخطاء لمعرفة سبب حدوثها.", color: "C" },
-  { id: 48, text: "ألتزم بالمعايير والمقاييس بدقة.", color: "C" },
-];
 
 const DISC_META = {
   D: { label: "الحزم (D)", color: "#ef4444" },   // Red
@@ -129,53 +77,53 @@ function DiscPieChart({ scores }) {
       </svg>
 
       <div className="space-y-4 w-full">
-  {segments.map((seg) => {
-    let desc = "";
+        {segments.map((seg) => {
+          let desc = "";
 
-    switch (seg.key) {
-      case "D":
-        desc =
-          "حازم وطموح، يركز على النتائج ويحب اتخاذ القرارات السريعة. يحفّزه التحدي وتحقيق التأثير.";
-        break;
-      case "I":
-        desc =
-          "ودود ومُلهم للآخرين، يحب التواصل والعلاقة الإيجابية. يعبر عن أفكاره بسهولة ويحفّز بروح المتعة.";
-        break;
-      case "S":
-        desc =
-          "هادئ ومتوازن، يفضل الاستقرار والعلاقات المتعاونة. يميل للصبر ويبحث عن بيئة يسودها الانسجام.";
-        break;
-      case "C":
-        desc =
-          "منظم ودقيق، يهتم بالحقائق والجودة والأنظمة. يفضل التحليل والوضوح قبل اتخاذ القرار.";
-        break;
-    }
+          switch (seg.key) {
+            case "D":
+              desc =
+                "حازم وطموح، يركز على النتائج ويحب اتخاذ القرارات السريعة. يحفّزه التحدي وتحقيق التأثير.";
+              break;
+            case "I":
+              desc =
+                "ودود ومُلهم للآخرين، يحب التواصل والعلاقة الإيجابية. يعبر عن أفكاره بسهولة ويحفّز بروح المتعة.";
+              break;
+            case "S":
+              desc =
+                "هادئ ومتوازن، يفضل الاستقرار والعلاقات المتعاونة. يميل للصبر ويبحث عن بيئة يسودها الانسجام.";
+              break;
+            case "C":
+              desc =
+                "منظم ودقيق، يهتم بالحقائق والجودة والأنظمة. يفضل التحليل والوضوح قبل اتخاذ القرار.";
+              break;
+          }
 
-    return (
-      <div
-        key={seg.key}
-        className="space-y-1 border-b pb-2 last:border-none"
-      >
-        {/* Header Row */}
-        <div className="flex items-center justify-between gap-2 text-sm">
-          <div className="flex items-center gap-2">
-            <span
-              className="inline-block w-3 h-3 rounded"
-              style={{ backgroundColor: seg.color }}
-            />
-            <span className="font-medium">{seg.label}</span>
-          </div>
-          <span className="font-semibold">{seg.percent}%</span>
-        </div>
+          return (
+            <div
+              key={seg.key}
+              className="space-y-1 border-b pb-2 last:border-none"
+            >
+              {/* Header Row */}
+              <div className="flex items-center justify-between gap-2 text-sm">
+                <div className="flex items-center gap-2">
+                  <span
+                    className="inline-block w-3 h-3 rounded"
+                    style={{ backgroundColor: seg.color }}
+                  />
+                  <span className="font-medium">{seg.label}</span>
+                </div>
+                <span className="font-semibold">{seg.percent}%</span>
+              </div>
 
-        {/* Description */}
-        <p className="text-xs text-gray-600 leading-relaxed">
-          {desc}
-        </p>
+              {/* Description */}
+              <p className="text-xs text-gray-600 leading-relaxed">
+                {desc}
+              </p>
+            </div>
+          );
+        })}
       </div>
-    );
-  })}
-</div>
 
     </div>
   );
