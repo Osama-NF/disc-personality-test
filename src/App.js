@@ -97,6 +97,8 @@ function DiscPieChart({ scores }) {
               desc =
                 "منظم ودقيق، يهتم بالحقائق والجودة والأنظمة. يفضل التحليل والوضوح قبل اتخاذ القرار.";
               break;
+            default:
+              return null;
           }
 
           return (
